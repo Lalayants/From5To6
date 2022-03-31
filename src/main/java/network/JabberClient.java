@@ -13,7 +13,7 @@ import java.io.*;
 import java.time.ZonedDateTime;
 import java.util.Scanner;
 import java.util.Vector;
-
+//zzzz
 public class JabberClient {
     public static void main(String[] args) throws IOException {
         InetAddress addr = InetAddress.getByName(null);
