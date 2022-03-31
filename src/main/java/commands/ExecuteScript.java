@@ -6,6 +6,7 @@ import utilities.LabComparator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Scanner;
@@ -16,9 +17,9 @@ import java.util.Vector;
  *Класс команды по запуску скрипта из указанного файла
  */
 
-public class ExecuteScript implements Commandable {
+public class ExecuteScript implements Serializable, Commandable {
     @Override
-    public void execute(Object o) {
+    public String execute(Object o) {
         String START = (String) o;
         Invoker inv = new Invoker();
         inv.register(new Add(), new Help(), new Info(), new Show(), new Clear(), new Exit(), new Save(), new UpdateId(),
@@ -85,7 +86,7 @@ public class ExecuteScript implements Commandable {
                     case"execute_script":
                         try {
                             Object argument = ComAndArg[1];
-                            Commandable command = Invoker.commands.get(ComAndArg[0]);
+                            Commandable command = new Invoker().commands.get(ComAndArg[0]);
 
                                 if(!Objects.equals(argument, START)) {
                                     command.execute(argument);
@@ -284,7 +285,7 @@ public class ExecuteScript implements Commandable {
 
                     default:
                         Object argument = null;
-                        Commandable command = Invoker.commands.get(ComAndArg[0]);
+                        Commandable command = new Invoker().commands.get(ComAndArg[0]);
                         try {
                             if (command == null)
                                 throw new IllegalStateException();
@@ -303,6 +304,7 @@ public class ExecuteScript implements Commandable {
         } catch (FileNotFoundException | IdBusyException e) {
             System.out.println("Файл не существует или закрыт для чтения");
         }
+        return "done";
     }
 
 //    class LabWorkCreate {

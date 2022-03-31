@@ -4,16 +4,22 @@ package labStuff;
 import utilities.ConsoleIO;
 import utilities.LabComparator;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
 /**
  * Класс коллекции
  */
-public class LabCollection {
+public class LabCollection implements Serializable{
     public static Vector<LabWork> collection = new Vector<>();
     public static ArrayList<Integer> ids = new ArrayList<>();
     private static LocalDate creationDate = LocalDate.now();
+    public Vector<LabWork> transfer = new Vector<>();
+
+
+
+
 
     public LabCollection() {
         ids.add(0);
@@ -99,6 +105,60 @@ public class LabCollection {
         if (getSize() > 0) {
             System.out.println("__________________________");
             for (LabWork a : collection) {
+                System.out.println("__________________________");
+                System.out.println(a);
+            }
+            System.out.println("__________________________");
+            System.out.println("__________________________");
+        } else {
+            System.out.println("__________________________");
+            ConsoleIO.ConsoleOut("Коллекция пуста\n");
+            System.out.println("__________________________");
+        }
+    }
+    public String show_str(){
+        Vector<LabWork> v = getClone();
+        v.sort(new LabComparator());
+        String s = "";
+        if (getSize() > 0) {
+            s+="__________________________\n";
+            for (LabWork a : v) {
+                s+="__________________________\n";
+                s+=a+"\n";
+            }
+            s+="__________________________\n";
+            s+="__________________________\n";
+        } else {
+            s+="__________________________\n";
+            s+="Коллекция пуста\n";
+            s+="__________________________\n";
+        }
+        return s;
+    }
+    public String show_str(Vector<LabWork> v){
+        String s = "";
+        if (getSize() > 0) {
+            s+="__________________________\n";
+            for (LabWork a : v) {
+                s+="__________________________\n";
+                s+=a+"\n";
+            }
+            s+="__________________________\n";
+            s+="__________________________\n";
+        } else {
+            s+="__________________________\n";
+            s+="Коллекция пуста\n";
+            s+="__________________________\n";
+        }
+        return s;
+    }
+    public void synchronize(){
+        transfer.addAll(collection);
+    }
+    public void showt() {
+        if (!transfer.isEmpty()) {
+            System.out.println("__________________________");
+            for (LabWork a : transfer) {
                 System.out.println("__________________________");
                 System.out.println(a);
             }

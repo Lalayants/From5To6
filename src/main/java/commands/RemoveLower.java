@@ -4,16 +4,17 @@ import labStuff.LabCollection;
 import labStuff.LabWork;
 import utilities.LabWorkCreator;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 /**
  * Класс команды, удаляющей все элементы меньше указанного
  */
 
-public class RemoveLower implements Commandable{
+public class RemoveLower implements Commandable, Serializable {
     @Override
-    public void execute(Object o) {
-        LabWork ref = LabWorkCreator.create();
+    public String execute(Object o) {
+        LabWork ref = new LabWorkCreator().create();
         Vector<LabWork> buffer = new Vector<>();
         LabCollection labcollection = new LabCollection();
         labcollection.add(ref);
@@ -24,15 +25,13 @@ public class RemoveLower implements Commandable{
             }
         }
         if (buffer.isEmpty()){
-            System.out.println("Таких элементов нет");
+            return "Таких элементов нет";
         } else {
             for (LabWork elems: buffer){
                 labcollection.remove(elems);
             }
-            System.out.println("Элементы меньше данного удалены");
+            return "Элементы меньше данного удалены";
         }
-
-
     }
 
     @Override

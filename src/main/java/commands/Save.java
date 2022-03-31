@@ -8,9 +8,10 @@ import utilities.FileWriter;
  */
 public class Save implements Commandable {
     @Override
-    public void execute(Object o) {
+    public String execute(Object o) {
         FileWriter.writeToFile(LabCollection.getCollection());
         System.out.println("Коллекция сохранена");
+        return null;
     }
 
     @Override

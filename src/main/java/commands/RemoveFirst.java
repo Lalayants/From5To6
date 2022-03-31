@@ -2,16 +2,17 @@ package commands;
 
 import labStuff.LabCollection;
 
+import java.io.Serializable;
+
 /**
  * Класс команды, удаляющей первый элемент
  */
 
-public class RemoveFirst implements Commandable{
+public class RemoveFirst implements Serializable, Commandable{
     @Override
-    public void execute(Object o) {
+    public String execute(Object o) {
         LabCollection.collection.remove(0);
-        System.out.println("Первый элемент удален");
-
+        return "Первый элемент удален";
     }
 
     @Override

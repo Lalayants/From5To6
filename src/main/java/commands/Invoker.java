@@ -9,12 +9,16 @@ import java.util.TreeMap;
 
 
 public class Invoker {
-
-    public static Map<String, Commandable> commands = new TreeMap<>();
+    private static Invoker invoker = new Invoker();
+    public Map<String, Commandable> commands = new TreeMap<>();
     public boolean check(String s){
         return commands.containsKey(s);
     }
-
+    public Invoker(){
+        register(new Add(), new Help(), new Info(), new Show(), new Clear(), new Exit(), new Save(), new UpdateId(),
+                new RemoveById(), new RemoveFirst(), new AddIfMin(), new RemoveLower(), new CountLessThanMinimalPoint(),
+                new PrintDescending(), new RemoveById(), new PrintUniqueMinimalPoint(), new ExecuteScript());
+    }
 
     public void register(String commandName, Commandable command) {
         commands.put(commandName, command);
@@ -43,5 +47,15 @@ public class Invoker {
                 System.out.println("Такой команды не существует, введите \"help\", чтобы ознакомиться со всем перечнем команд.");
         }
 
+    }
+
+    public static Invoker getInvoker() {
+        if (invoker == null)
+            invoker = new Invoker();
+        return invoker;
+    }
+
+    public void setInvoker(Invoker invoker) {
+        this.invoker = invoker;
     }
 }

@@ -7,7 +7,7 @@ import java.util.Scanner;
  * Класс для чтения и выводы в консоль
  */
 public class ConsoleIO {
-    private static final Scanner in = new Scanner(System.in);
+    private static Scanner in = new Scanner(System.in);
 
     public static void ConsoleOut(String s) {
         System.out.print(s);
@@ -34,9 +34,10 @@ public class ConsoleIO {
             String s = in.nextLine();
             return s;
         } catch (NoSuchElementException e) {
-            //System.out.println("Такая комбинация завершает программу");
+            System.out.println("Такая комбинация завершает программу");
             System.exit(0);
-            return null;
+            //in = new Scanner(System.in);
+            return "";
 
         }
         //return "";

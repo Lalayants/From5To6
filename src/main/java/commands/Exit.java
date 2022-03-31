@@ -1,8 +1,10 @@
 package commands;
 
-public class Exit implements Commandable{
+import java.io.Serializable;
+
+public class Exit implements Serializable, Commandable{
     @Override
-    public void execute(Object o){
+    public String execute(Object o){
 //        try {
 //            System.in.reset();
 //        } catch (IOException e){}
@@ -16,6 +18,7 @@ public class Exit implements Commandable{
 //        if (anwser.toUpperCase().equals("Y"))
 //            new Save().execute(null);
         System.exit(0);
+        return null;
     }
 
     @Override

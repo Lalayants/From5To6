@@ -1,24 +1,36 @@
 package commands;
 
-import utilities.LabWorkCreator;
+import exceptions.IdBusyException;
+import labStuff.LabCollection;
+import labStuff.LabWork;
+
+import java.io.Serializable;
 
 /**
  * Класс команды добавления элемента в коллекцию
  */
 
-public class Add implements Commandable{
+public class Add implements Commandable, Serializable {
     /**
      *
      * @param o
+     * @return
      */
 
 
 
 
     @Override
-    public void execute(Object o) {
-        labcollection.add(LabWorkCreator.create());
-        System.out.println("Добавлено");
+    public String execute(Object o) {
+        LabWork a = (LabWork) o;
+        try {
+            a.setId(LabCollection.getFreeId());
+        } catch (IdBusyException e) {
+            e.printStackTrace();
+        }
+        a.setCreationDate();
+        labcollection.add(a);
+        return "Элемент добавлен";
     }
 
     /**

@@ -1,13 +1,17 @@
 package commands;
 
+import java.io.Serializable;
+
 /**
  * Класс команды, выводящей справку по коллекции
  */
-public class Info implements Commandable {
+public class Info implements Serializable,Commandable {
 
     @Override
-    public void execute(Object o) {
-        System.out.println(labcollection.getInfo());
+    public String execute(Object o) {
+
+        //System.out.println(labcollection.getInfo());
+        return labcollection.getInfo();
     }
 
     @Override

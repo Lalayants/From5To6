@@ -3,6 +3,7 @@ package labStuff;
 import exceptions.ComaInsteadOfDotException;
 import utilities.ConsoleIO;
 
+import java.io.Serializable;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
@@ -10,7 +11,7 @@ import java.time.LocalDate;
  * Класс человека
  */
 
-public class Person {
+public class Person implements Serializable {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private java.time.LocalDate birthday; //Поле может быть null
     private float weight; //Значение поля должно быть больше 0

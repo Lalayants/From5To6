@@ -4,19 +4,19 @@ import labStuff.LabCollection;
 import labStuff.LabWork;
 import utilities.LabComparator;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 /**
  * Класс команды, выводящий коллекцию в порядке уменьшения
  */
 
-public class PrintDescending implements Commandable{
+public class PrintDescending implements Serializable,Commandable{
     @Override
-    public void execute(Object o) {
+    public String execute(Object o) {
         Vector<LabWork> v = LabCollection.getClone();
         v.sort(new LabComparator().reversed());
-        LabCollection.show(v);
-
+        return new LabCollection().show_str(v);
     }
 
     @Override

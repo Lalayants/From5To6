@@ -1,14 +1,17 @@
 package commands;
 
+import java.io.Serializable;
+
 /**
  * Класс команды очистки коллекции
  */
 
-public class Clear implements Commandable{
+public class Clear implements Serializable, Commandable{
 
     @Override
-    public void execute(Object o) {
+    public String execute(Object o) {
         labcollection.clear();
+        return "Коллекция очищена";
     }
 
     @Override

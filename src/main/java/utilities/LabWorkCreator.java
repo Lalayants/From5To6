@@ -4,6 +4,8 @@ import exceptions.ComaInsteadOfDotException;
 import exceptions.IdBusyException;
 import labStuff.*;
 
+import java.util.Scanner;
+
 /**
  * Класс для создания элементов коллекции
  */
@@ -11,10 +13,8 @@ import labStuff.*;
 public class LabWorkCreator {
     //public static Scanner in = new Scanner(System.in);
 
-    public static LabWork create() {
+    public LabWork create() {
         LabWork labWork = new LabWork();
-        labWork.setCreationDate();
-        setId(labWork);
         setName(labWork);
         setMinimalPoint(labWork);
         setPersonalQualitiesMinimum(labWork);
@@ -24,7 +24,8 @@ public class LabWorkCreator {
 
         return labWork;
     }
-    public static LabWork create(int id) {
+
+    public LabWork create(int id) {
         LabWork labWork = new LabWork();
         labWork.setCreationDate();
         try {
@@ -42,7 +43,7 @@ public class LabWorkCreator {
         return labWork;
     }
 
-    private static void setId(LabWork l) {
+    private void setId(LabWork l) {
         try {
             l.setId(LabCollection.getFreeId());
         } catch (IdBusyException e) {
@@ -50,7 +51,7 @@ public class LabWorkCreator {
         }
     }
 
-    private static void setPersonalQualitiesMinimum(LabWork l) {
+    private void setPersonalQualitiesMinimum(LabWork l) {
         System.out.print("Введите минимальный балл за личные качества:\n" + ">");
         try {
             String s = ConsoleIO.ConsoleIn();
@@ -72,7 +73,7 @@ public class LabWorkCreator {
         }
     }
 
-    public static void setMinimalPoint(LabWork l) {
+    public void setMinimalPoint(LabWork l) {
         System.out.print("Введите минимальный балл :\n" + ">");
         try {
             String s = ConsoleIO.ConsoleIn();
@@ -98,7 +99,7 @@ public class LabWorkCreator {
         }
     }
 
-    public static void setDifficulty(LabWork lab) {
+    public void setDifficulty(LabWork lab) {
         Difficulty[] difficulties = Difficulty.values();
         String s = "";
         for (Difficulty a : difficulties) {
@@ -120,7 +121,7 @@ public class LabWorkCreator {
 
     }
 
-    private static void setName(LabWork lab) {
+    private void setName(LabWork lab) {
         System.out.print("Введите имя лабораторной работы:\n" + ">"); //Так аккуратнее или можно без плюса в одних "?
         String name = ConsoleIO.ConsoleIn();
         if (name.equals("") || name.equals("null")) {
@@ -131,14 +132,53 @@ public class LabWorkCreator {
         }
     }
 
-    private static void setCoordinates(LabWork lab) {
+    private void setCoordinates(LabWork lab) {
         Coordinates coordinates = new Coordinates();
-        coordinates.setX();
-        coordinates.setY();
+        setCoordX(coordinates);
+        setCoordY(coordinates);
+        // coordinates.setY();
         lab.setCoordinates(coordinates);
     }
 
-    private static void setPerson(LabWork lab) {
+    private void setCoordX(Coordinates c) {
+        System.out.print("Введите координату X :\n" + ">");
+        try {
+            String s = ConsoleIO.ConsoleIn();
+            if (s.contains(",")) {
+                throw new ComaInsteadOfDotException();
+            } else if (s.equals("") || s.equals("null")) {
+                System.out.println("Не может быть null или \"\" ");
+                this.setCoordX(c);
+            } else {
+                c.setX(Float.parseFloat(s));
+            }
+        } catch (NumberFormatException a) {
+            System.out.println("Нужно ввести десятичную дробь состоящую из цифр и разделительной точки без использования букв");
+            this.setCoordX(c);
+        } catch (ComaInsteadOfDotException a) {
+            this.setCoordX(c);
+        }
+
+    }
+
+    private void setCoordY(Coordinates c) {
+        System.out.print("Введите координату Y :\n" + ">");
+        try {
+            String s = ConsoleIO.ConsoleIn();
+            if (s.equals("") || s.equals("null")) {
+                System.out.println("Не может быть null или \"\" ");
+                this.setCoordY(c);
+            } else {
+                c.setY(Long.parseLong(s));
+            }
+        } catch (NumberFormatException a) {
+            System.out.println("Нужно ввести целое число, состоящее только из цифр");
+            this.setCoordY(c);
+        }
+
+    }
+
+    private void setPerson(LabWork lab) {
         Person p = new Person();
         p.setName();
         p.setWeight();

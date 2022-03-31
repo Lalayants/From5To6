@@ -1,26 +1,29 @@
 package commands;
 
 import labStuff.LabCollection;
-import labStuff.LabWork;
+
+import java.io.Serializable;
 
 /**
  * Класс команды подсчета элементов, минимальный балл которых меньше заданного
  */
-public class CountLessThanMinimalPoint implements Commandable{
+public class CountLessThanMinimalPoint implements Serializable, Commandable{
     @Override
-    public void execute(Object o) {
+    public String execute(Object o) {
         try {
             int i = 0;
             int ref = Integer.parseInt((String) o);
-            for (LabWork elems : LabCollection.collection) {
-                if (elems.getMinimalPoint() < ref) {
-                    i++;
-                }
-            }
-            System.out.println("Таких " + i);
+            return ("Таких " + LabCollection.collection.stream().filter(lab->lab.getMinimalPoint()<ref).count());
+//            for (LabWork elems : LabCollection.collection) {
+//                if (elems.getMinimalPoint() < ref) {
+//                    i++;
+//                }
+//            }
+//            System.out.println("Таких " + i);
         } catch(NumberFormatException e){
-            System.out.println("MinimalPoint должен быть целым числом");
+            return "MinimalPoint должен быть целым числом";
         }
+
     }
 
     @Override
