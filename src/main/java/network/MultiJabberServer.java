@@ -1,5 +1,6 @@
 package network;
 
+import commands.Save;
 import exceptions.IdBusyException;
 import labStuff.LabCollection;
 import labStuff.LabWork;
@@ -46,6 +47,7 @@ class ServeOneJabber extends Thread {
                     System.out.println("Executing " + request.getCommand().getName());
                     dout.writeUTF(request.getCommand().execute(request.getArgs()));
                     dout.flush();
+                    new Save().execute("");
                 } else
                     break;
             }

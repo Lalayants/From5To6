@@ -30,7 +30,7 @@ public class JabberClient {
             System.out.println("Connected to server");
             System.out.println("Приложение готово к работе, введите команду, для справки введите help.");
 
-          //  ObjectOutputStream ooss = new ObjectOutputStream(Channels.newOutputStream(socket.getChannel()));
+            //  ObjectOutputStream ooss = new ObjectOutputStream(Channels.newOutputStream(socket.getChannel()));
 
             while (socket.isConnected()) {
                 try {
@@ -77,13 +77,12 @@ public class JabberClient {
                     System.out.println(in.readUTF());
                 } catch (NumberFormatException e) {
                     System.out.println("Аргументом должно быть целое число");
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                 }
             }
 
-
+        }catch (ConnectException e){
+            System.out.println("Сначала сервер");
         } catch (EOFException e){
             System.out.println("Вы напугали сервер, он сломался");
             e.printStackTrace();
