@@ -7,6 +7,16 @@ import java.io.Serializable;
 
 public class Request implements Serializable {
     private Commandable command ;
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "command=" + command +
+                ", args=" + args +
+                ", extra=" + extra +
+                '}';
+    }
+
     private Object args;
     private Object extra;
 

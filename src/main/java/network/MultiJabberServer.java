@@ -9,16 +9,18 @@ import utilities.FileReader;
 import java.io.*;
 
 import java.net.*;
+import java.nio.channels.Channels;
 
 class ServeOneJabber extends Thread {
     private Socket socket;
     private BufferedReader in;
-    private PrintWriter out;
+   // private PrintWriter out;
     private int counter;
     private ObjectInputStream inn; // боюсь переделать in
     private ObjectOutputStream outt;
     private LabCollection collection = new LabCollection();
     private DataOutputStream dout;
+   // private ObjectInputStream iinn;
 
 
     public ServeOneJabber(Socket s, int c) throws IOException {
@@ -27,7 +29,11 @@ class ServeOneJabber extends Thread {
         dout = new DataOutputStream(socket.getOutputStream());
         inn = new ObjectInputStream(socket.getInputStream());
         outt = new ObjectOutputStream(socket.getOutputStream());
-        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+
+
+        //iinn = new ObjectInputStream(Channels.newInputStream(socket.getChannel()));
+
+        //out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
         start(); // вызываем run()
     }
 
@@ -35,9 +41,13 @@ class ServeOneJabber extends Thread {
         try {
             while (true) {
                 Request request = (Request) inn.readObject();
-                System.out.println("Executing " + request.getCommand().getName());
-                dout.writeUTF(request.getCommand().execute(request.getArgs()));
-                dout.flush();
+               // Request request = (Request) iinn.readObject();
+                if (!request.getCommand().getName().equals("exit")) {
+                    System.out.println("Executing " + request.getCommand().getName());
+                    dout.writeUTF(request.getCommand().execute(request.getArgs()));
+                    dout.flush();
+                } else
+                    break;
             }
         } catch (EOFException e){
 

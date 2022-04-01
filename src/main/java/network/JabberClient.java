@@ -10,6 +10,7 @@ import javax.security.auth.callback.LanguageCallback;
 import java.net.*;
 
 import java.io.*;
+import java.nio.channels.Channels;
 import java.time.ZonedDateTime;
 import java.util.Scanner;
 import java.util.Vector;
@@ -22,16 +23,17 @@ public class JabberClient {
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             System.out.println("Client app for Lab6 v751300 by Kirill Lalayants R3137 2022 \nApp Started");
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream()); //kill it
+            InputStream inFromServer = socket.getInputStream();
+            DataInputStream in = new DataInputStream(inFromServer);
+            socket.getChannel();
             System.out.println("Connected to server");
             System.out.println("Приложение готово к работе, введите команду, для справки введите help.");
 
+          //  ObjectOutputStream ooss = new ObjectOutputStream(Channels.newOutputStream(socket.getChannel()));
 
             while (socket.isConnected()) {
                 try {
-                    InputStream inFromServer = socket.getInputStream();
-                    DataInputStream in = new DataInputStream(inFromServer);
                     System.out.print(">");
                     String[] raw = ConsoleIO.ConsoleIn().trim().split(" ");
                     if (raw.length > 1) {
@@ -46,6 +48,9 @@ public class JabberClient {
                                 int id = Integer.parseInt(raw[1]);
                                 LabWork lab = new LabWorkCreator().create();
                                 lab.setIdBlindly(id);
+
+
+                                // ooss.writeObject(new Request(raw[0], lab));
                                 oos.writeObject(new Request(raw[0], lab));
                                 oos.flush();
                             } else {
@@ -64,6 +69,9 @@ public class JabberClient {
                         } else if (raw[0].equals("exit")) {
                             System.out.println("Пока");
                             System.exit(0);
+                        } else {
+                            System.out.println("В команде ошибка, проверьте написание, возможно лишние аргументы");
+                            throw new Exception();
                         }
                     }
                     System.out.println(in.readUTF());

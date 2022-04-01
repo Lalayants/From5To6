@@ -96,7 +96,7 @@ public class Decode {
                                         LinkedTreeMap<String, Double> partsOfTime = (LinkedTreeMap) dateTime.get("time");
                                         if (!partsOfDate.containsKey("year") || !partsOfDate.containsKey("month") || !partsOfDate.containsKey("day") || !partsOfTime.containsKey("hour") ||
                                                 !partsOfTime.containsKey("minute") || !partsOfTime.containsKey("second") || !partsOfTime.containsKey("nano")) {
-                                            System.out.println("Ошибка в JSON, значение даты создания лабораторной N\" + i + \" не удалось считать.\\n   Не хватает поля year/month/day в date или hour/minute/second/nano в time");
+                                           // System.out.println("Ошибка в JSON, значение даты создания лабораторной N\" + i + \" не удалось считать.\\n   Не хватает поля year/month/day в date или hour/minute/second/nano в time");
                                         } else {
                                             try {
                                                 ZoneId zoneId = ZoneId.of(Zone.get("id"));
